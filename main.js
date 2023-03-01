@@ -50,5 +50,6 @@ console.log(pokefoto);
 function buscapokemon() {
     const id_poke = document.getElementById("id_poke")
     var idPOKE = id_poke.value
+    //no sabia si era necesario el string  pero no pierdo nada si lo pongo 
     buscar(String(idPOKE))
 }

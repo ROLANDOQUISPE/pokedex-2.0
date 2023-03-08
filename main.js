@@ -110,62 +110,42 @@ var num = 1
 var o = 0
 var slot_ability = ""
 
-const buscar = async ( id_o_nombre) => {
+const buscar = async (id_o_nombre) => { 
   let pokeurl = `https://pokeapi.co/api/v2/pokemon/${id_o_nombre}/`
-  
+
   const pokeurlApi = await fetch(pokeurl)
   const pokeurlApiJson = await pokeurlApi.json()
   const pokenombre = await pokeurlApiJson.name
   const pokeid = await pokeurlApiJson.id
-  const type_1 = await pokeurlApiJson.types[0].type.name
+
   let pokefoto = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeid}.png`
-  try {var type_2 = await pokeurlApiJson.types[1].type.name} catch (err) { console.log("error por solo un tipo " + err)}
 
   let cartasDiv = document.getElementById("contenedorCartas")
 
- typecolor.forEach(arr =>{
-  if (arr.name == type_1){
-   color = arr.color
-  }
-  if (arr.name == type_2){
-   color2 = arr.color
-  }
- })
+  var type_color = ""
+  var type = ""
 
- pokeurlApiJson.types.forEach((arr, index) => {
-     slot = arr.slot
+  pokeurlApiJson.types.forEach(arr => {
+    type = arr.type.name
+    typecolor.forEach(arr => {
+      if (arr.name == type) {
+        color = arr.color
+      }
+    })
+      type_color += `<p class="card-text rounded-pill text-center" style="background-color: rgb(${color})">${type}</p>`
   })
-
-  if (slot == 2) {
-    cartasDiv.innerHTML += `  
-      <div class="card col-3" onclick="seleccionado(${pokeid})">
-        <img src= ${pokefoto} class="card-img-top" >
-        <div class="card-body">
-        <h4 class = "card-title text-center">${pokenombre}</h4>
-        <p class="card-text rounded-pill text-center" style="background-color: rgb(${color});">${type_1}</p>
-        <p class="card-text  rounded-pill text-center" style="background-color: rgb(${color2});">${type_2}</p>
-          <div class="card-footer">
-          <small class="text-muted">the id of the pokemon is :${pokeid}</small>
-        </div>
-        </div>
-      </div>
-          `
-  }
-
-  if (slot == 1) {
-    cartasDiv.innerHTML += `  
-      <div  class="card col-3" onclick="seleccionado(${pokeid})">
-        <img src= ${pokefoto} class="card-img-top" >
-        <div class="card-body">
-        <h3 class = "card-title text-center">${pokenombre}</h3>
-        <p class="card-text rounded-pill text-center"style="background-color: rgb(${color});" >${type_1}</p>
-          <div class="card-footer">
-          <small class="text-muted">the id of the pokemon is :${pokeid}</small>
-        </div>
-        </div>
-      </div>
-          `
-  }
+  cartasDiv.innerHTML += `  
+  <div class="card col-3" onclick="seleccionado(${pokeid})">
+   <img src= ${pokefoto} class="card-img-top" >
+   <div class="card-body">
+   <h4 class = "card-title text-center">${pokenombre}</h4>
+   ${type_color}
+     <div class="card-footer">
+     <small class="text-muted">the id of the pokemon is :${pokeid}</small>
+   </div>
+   </div>
+  </div>
+     `
 }
 
 const seleccionado = async(id) => {   
@@ -196,7 +176,7 @@ const seleccionado = async(id) => {
 
 
 
-//importante sacar el efecto  de los movimientos usando la url dada en cada moves y poner esa info al tooltip que funciona despues aviriguar como mejorar el diseño y utilizar el tooltip para otras funciones como ---- aun nose  
+ //importante sacar el efecto  de los movimientos usando la url dada en cada moves y poner esa info al tooltip que funciona despues aviriguar como mejorar el diseño y utilizar el tooltip para otras funciones como ---- aun nose  
 
 
   //

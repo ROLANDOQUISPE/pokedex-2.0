@@ -18,16 +18,17 @@
 <body>
     <div class="container-fluid container pt-3">
         <h1 class="fw-bold display-5"> pokedex 2.0</h1>      
-        
         <form>
             <div class="row">
                 <div class="col">
                     <label class="mr-sm-2" for="inlineFormCustomSelect">Introduce el id del pokemon</label>
-                    <input type="number" id="id_poke" class="form-control" placeholder="1" value="0">
+                    <input type="number" id="id_poke" class="form-control" placeholder="pon el id del pokemon o hasta donde quires llegar comenzando del 1" >
+                    <input type="text" id="name_poke" class="form-control" placeholder="pon el nombre del pokemon" >
                 </div>
             </div>
             <div class="container row">
-                <button class="btn btn-primary form-control mt-3 col-12" type="button" onclick="buscapokemon()">Buscar</button>
+                <button class="btn btn-primary form-control mt-3 col-12" type="button" onclick="buscapokemon_id()">Buscar por id</button>
+                <button class="btn btn-primary form-control mt-3 col-12" type="button" onclick="buscapokemon_nombre()">Buscar por nombre</button>
                 <button class="btn btn-primary form-control mt-3 col-12" type="button" onclick="busqueda_general()">Buscar hasta ...</button>
                 <button class="btn btn-primary  mt-3 col-4" type="button" onclick="menos_10()">anterior</button>
                 <button class="btn btn-primary  mt-3 col-4" type="button" onclick="limpiar()">limpiar</button>

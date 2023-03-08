@@ -110,16 +110,15 @@ var num = 1
 var o = 0
 var slot_ability = ""
 
-const buscar = async (id) => {
-  let pokeurl = `https://pokeapi.co/api/v2/pokemon/${id}/`
-  let pokefoto = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
-
+const buscar = async ( id_o_nombre) => {
+  let pokeurl = `https://pokeapi.co/api/v2/pokemon/${id_o_nombre}/`
+  
   const pokeurlApi = await fetch(pokeurl)
   const pokeurlApiJson = await pokeurlApi.json()
-
   const pokenombre = await pokeurlApiJson.name
   const pokeid = await pokeurlApiJson.id
   const type_1 = await pokeurlApiJson.types[0].type.name
+  let pokefoto = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeid}.png`
   try {var type_2 = await pokeurlApiJson.types[1].type.name} catch (err) { console.log("error por solo un tipo " + err)}
 
   let cartasDiv = document.getElementById("contenedorCartas")
@@ -201,12 +200,21 @@ const seleccionado = async(id) => {
 
 
   //
-  var pokemove = pokeurlApiJson.moves
+  var pokemove = await pokeurlApiJson.moves
   var moves = ""
   pokemove.forEach(arr => {
-    let move = arr.move.name
-    let 
-    moves += `| <a data-bs-toggle="mensaje" title="funciono"  href="#">${move}</a> |`
+    const movsawa = async(arr) => {
+      let move = await arr.move.name
+      let moveurl = await arr.move.url
+      let moveapi = await fetch(moveurl)
+      let movejson =  await moveapi.json()
+      let moveEffect = await movejson.effect_entries
+      await moveEffect.forEach(arr => {
+        moves += `| <a data-bs-toggle="mensaje" title="${arr.effect}"  href="#">${move}</a> |`
+    
+    })
+     }
+     movsawa(arr)
   });
   
   var hp = pokeurlApiJson.stats[0].base_stat
@@ -610,7 +618,7 @@ function limpiar() {
 	}
 }
 
-function buscapokemon() {
+function buscapokemon_id() {
   
     let cartasDiv = document.getElementById("contenedorCartas")
     while(cartasDiv.firstChild){
@@ -619,7 +627,21 @@ function buscapokemon() {
   
   const id_poke = document.getElementById("id_poke")
   let idPOKE = id_poke.value 
+ 
   if(idPOKE > 0){
   buscar(idPOKE)
   }
+}
+function buscapokemon_nombre() {
+  
+  let cartasDiv = document.getElementById("contenedorCartas")
+  while(cartasDiv.firstChild){
+    cartasDiv.removeChild(cartasDiv.firstChild)
+  }
+
+const name_poke = document.getElementById("name_poke").value 
+let namePOKE = name_poke.toLocaleLowerCase()
+
+
+buscar(namePOKE)
 }

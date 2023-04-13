@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "netlify-cli": "^13.2.1",
     "node-fetch": "^3.3.0",
     "nodemon": "^2.0.20"
   },
